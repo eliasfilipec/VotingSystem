@@ -1,0 +1,46 @@
+[
+	{
+		"Name": "Bar do Epicurista",
+		"Address": "Av. Dr. Francisco Junqueira",
+		"Number": 3280,
+		"Neighborhood": "Vila Seixas",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14020-000",
+		"Complement": "",
+		"Telephone": "1636324616"
+	},
+	{
+		"Name": "Coco Bambu",
+		"Address": " Av. Luiz Eduardo Toledo Prado",
+		"Number": 900,
+		"Neighborhood": "Vila do Golfe",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14027-250",
+		"Complement": "Shopping Iguatemi",
+		"Telephone": "1639043737"
+	},
+	{
+		"Name": "Pastelaria Rios",
+		"Address": "R. Visc. de Inhauma",
+		"Number": 701,
+		"Neighborhood": "Centro",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14015-060",
+		"Complement": "",
+		"Telephone": "16997887431"
+	},
+	{
+		"Name": "Miraia Restaurante Japones",
+		"Address": "R. Ondibecte Silveira",
+		"Number": 293,
+		"Neighborhood": "Jardim Paulista",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14091-140",
+		"Complement": "",
+		"Telephone": "1636240530"
+	}
+]
