@@ -29,7 +29,7 @@ namespace APIVotingSystem
             });
             services.AddDbContext<VotingContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DbVoting"));
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
         }
 

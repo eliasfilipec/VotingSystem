@@ -98,6 +98,9 @@ namespace EFDataAccessLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateVote")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
