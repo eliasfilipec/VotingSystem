@@ -77,6 +77,21 @@ namespace APIVotingSystem.Controllers
             return text;
         }
 
+        [Route("Post/RankingToDate"), HttpPost]
+        public async Task<string> RankingToDate(DateTime? dateRanking)
+        {
+            if (!dateRanking.HasValue)
+                dateRanking = DateTime.UtcNow;
+
+            var resultVoteToDate = await _db.Vote.Where(w => w.DateVote.Date.Equals(dateRanking.Value.Date))
+                .Include(u => u.User)
+                .Include(r => r.Restaurant).FirstOrDefaultAsync();
+
+            var json = JsonSerializer.Serialize(resultVoteToDate);
+
+            return json;
+        }
+
         [Route("Post/InsertVote"), HttpPost]
         public async Task<string> InsertVote(int idUser, int idRestaurant)
         {
@@ -90,13 +105,27 @@ namespace APIVotingSystem.Controllers
                 if (restaurantResult == null)
                     return "Restaurante Inexistente!";
 
-                var now = DateTime.UtcNow;
+                var now = DateTime.UtcNow.AddHours(-3);
+
+                if (now.Hour > 18)
+                    return "Tempo de Votacao expirado.";
+
+                var voteResult = await _db.Vote.
+                    Where(w => w.DateVote.Date.Equals(now.Date)).
+                    Where(w => w.User.Id.Equals(userResult.Id)).ToListAsync();
+
+                if (voteResult.Any())
+                    return "Usuario ja realizou o voto!";
 
                 var vote = new Vote();
+                vote.DateVote = now;
                 vote.User = userResult;
                 vote.Restaurant = restaurantResult;
 
-                return "";
+                await _db.AddAsync(vote);
+                await _db.SaveChangesAsync();
+
+                return "Voto inserido com Sucesso!";
             }
             catch (Exception ex)
             {
