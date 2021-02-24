@@ -1,6 +1,4 @@
-﻿using EFDataAccessLibrary.DataAccess;
-using EFDataAccessLibrary.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
