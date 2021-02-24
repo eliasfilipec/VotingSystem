@@ -26,11 +26,6 @@ namespace VotingSystem.Controllers
             return View();
         }
 
-        public IActionResult RegisterRestaurants()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();

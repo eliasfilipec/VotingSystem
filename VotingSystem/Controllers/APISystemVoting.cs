@@ -26,7 +26,7 @@ namespace VotingSystem.Controllers
         }
 
         [HttpGet]
-        [Route("GetUsers")]
+        [Route("Get/Users")]
         public List<User> GetUsers()
         {
             LoadSampleData();
@@ -34,14 +34,14 @@ namespace VotingSystem.Controllers
         }
 
         [HttpGet]
-        [Route("GetRestaurants")]
+        [Route("Get/Restaurants")]
         public List<Restaurant> GetRestaurants()
         {
             LoadSampleData();
             return _db.Restaurant.ToList();
         }
 
-        //TESTES
+        //SAMPLE
         private void LoadSampleData()
         {
             if (_db.Restaurant.Count() == 0)
