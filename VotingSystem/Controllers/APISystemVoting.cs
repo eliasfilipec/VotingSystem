@@ -27,9 +27,10 @@ namespace VotingSystem.Controllers
 
         [HttpGet]
         [Route("GetUsers")]
-        public List<string> GetUsers()
+        public List<User> GetUsers()
         {
-            return new List<string>();
+            LoadSampleData();
+            return _db.User.ToList();
         }
 
         [HttpGet]
@@ -40,6 +41,7 @@ namespace VotingSystem.Controllers
             return _db.Restaurant.ToList();
         }
 
+        //TESTES
         private void LoadSampleData()
         {
             if (_db.Restaurant.Count() == 0)
@@ -47,6 +49,14 @@ namespace VotingSystem.Controllers
                 string file = System.IO.File.ReadAllText("generated_restaurants.json");
                 var restaurants = JsonSerializer.Deserialize<List<Restaurant>>(file);
                 _db.AddRange(restaurants);
+                _db.SaveChanges();
+            }
+
+            if (_db.User.Count() == 0)
+            {
+                string file = System.IO.File.ReadAllText("generated_users.json");
+                var users = JsonSerializer.Deserialize<List<User>>(file);
+                _db.AddRange(users);
                 _db.SaveChanges();
             }
         }
