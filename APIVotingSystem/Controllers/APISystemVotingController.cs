@@ -31,20 +31,20 @@ namespace APIVotingSystem.Controllers
         }
 
         [Route("Get/Users"), HttpGet]
-        public async Task<List<User>> GetUsers()
+        public async Task<List<User>> GetUsersAsync()
         {
             return await _db.User.ToListAsync();
         }
 
         [Route("Get/Restaurants"), HttpGet]
-        public async Task<List<Restaurant>> GetRestaurants()
+        public async Task<List<Restaurant>> GetRestaurantsAsync()
         {
             return await _db.Restaurant.ToListAsync();
         }
 
         [Route("Get/LoadSampleData"), HttpGet]
         //SAMPLE
-        public async Task<string> LoadSampleData()
+        public async Task<string> LoadSampleDataAsync()
         {
             var text = string.Empty;
 
@@ -78,22 +78,38 @@ namespace APIVotingSystem.Controllers
         }
 
         [Route("Post/RankingToDate"), HttpPost]
-        public async Task<string> RankingToDate(DateTime? dateRanking)
+        public async Task<string> RankingToDateAsync(DateTime? dateRanking)
         {
             if (!dateRanking.HasValue)
-                dateRanking = DateTime.UtcNow;
+                dateRanking = DateTime.UtcNow;            
 
+            var listRanking = new List<Ranking>();
             var resultVoteToDate = await _db.Vote.Where(w => w.DateVote.Date.Equals(dateRanking.Value.Date))
                 .Include(u => u.User)
-                .Include(r => r.Restaurant).FirstOrDefaultAsync();
+                .Include(r => r.Restaurant).ToListAsync();
+
+            if (!resultVoteToDate.Any())
+                return "Nenhum dado encontrado";
+
+            var restaurants = await GetRestaurantsAsync();
+
+            var listRaking = new List<Ranking>();
+            
+            
 
             var json = JsonSerializer.Serialize(resultVoteToDate);
 
             return json;
         }
 
+        class Ranking
+        {
+            public Restaurant restaurant { get; set; }
+            public int CountVotes { get; set; }
+        }
+
         [Route("Post/InsertVote"), HttpPost]
-        public async Task<string> InsertVote(int idUser, int idRestaurant)
+        public async Task<string> InsertVoteAsync(int idUser, int idRestaurant)
         {
             try
             {
