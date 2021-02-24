@@ -1,10 +1,12 @@
 ﻿using EFDataAccessLibrary.DataAccess;
 using EFDataAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace VotingSystem.Controllers
 {
@@ -19,26 +21,24 @@ namespace VotingSystem.Controllers
             _db = db;
         }
 
-        [HttpGet]
+        [Route("Get"), HttpGet]
         public string Get()
         {
             return $"API Sytem Voting On-line [{DateTime.UtcNow}]";
         }
-
-        [HttpGet]
-        [Route("Get/Users")]
-        public List<User> GetUsers()
+                
+        [Route("Get/Users"), HttpGet]
+        public async Task<List<User>> GetUsers()
         {
             LoadSampleData();
-            return _db.User.ToList();
+            return await _db.User.ToListAsync();
         }
 
-        [HttpGet]
-        [Route("Get/Restaurants")]
-        public List<Restaurant> GetRestaurants()
+        [Route("Get/Restaurants"), HttpGet]
+        public async Task<List<Restaurant>> GetRestaurants()
         {
             LoadSampleData();
-            return _db.Restaurant.ToList();
+            return await _db.Restaurant.ToListAsync();
         }
 
         //SAMPLE
