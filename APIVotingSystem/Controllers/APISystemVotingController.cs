@@ -119,8 +119,6 @@ namespace APIVotingSystem.Controllers
             if (!resultVoteToDate.Any())
                 return listranking;
 
-            var restaurants = await GetRestaurantsAsync();
-
             var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
                 .Select(group => new { result = group, Count = group.Count() })
                 .OrderByDescending(x => x.Count).ToList();
