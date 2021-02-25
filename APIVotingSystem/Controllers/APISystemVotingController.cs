@@ -30,12 +30,106 @@ namespace APIVotingSystem.Controllers
             return $"API Sytem Voting On-line [{DateTime.UtcNow}]";
         }
 
+        #region USER
         [Route("Get/Users"), HttpGet]
         public async Task<List<User>> GetUsersAsync()
         {
             return await _db.User.ToListAsync();
         }
 
+        [Route("Get/User/{id}"), HttpGet]
+        public async Task<User> GetUserToIdAsync(int? id)
+        {
+            var result = await _db.User.Where(w => w.Id.Equals(id)).FirstOrDefaultAsync();
+            if (result == null)
+                result = new User();
+
+            return result;
+        }
+
+        [Route("Put/User"), HttpPut]
+        public async Task<string> UpdateUserAsync(User user)
+        {
+            try
+            {
+                if (user == null)
+                    return "Objeto usuario esta nulo.";
+
+                var entity = _db.User.FirstOrDefault(i => i.Id == user.Id);
+
+                if (entity != null)
+                {
+                    entity.Name = user.Name;
+                    await _db.SaveChangesAsync();
+                    return "Usuario alterado com Sucesso!";
+                }
+                else
+                {
+                    return "Usuario Inexistente.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [Route("Post/User"), HttpPost]
+        public async Task<string> InsertUserAsync(string name)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(name))
+                    return "Campo Nome do usuario esta vazio.";
+
+                var users = GetUsersAsync();
+                users.Wait();
+                if (users.Result.Where(w => w.Name.ToUpper().Contains(name.ToUpper())).Any())
+                    return "Usuario ja Existente.";
+
+                var user = new User
+                {
+                    Name = name
+                };
+
+                await _db.AddAsync(user);
+                await _db.SaveChangesAsync();
+
+                return "Usuario inserido com Sucesso!";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [Route("Delete/User/{id}"), HttpDelete]
+        public async Task<string> DeleteUserAsync(int? id)
+        {
+            try
+            {
+                var result = await _db.User.Where(w => w.Id.Equals(id)).FirstOrDefaultAsync();
+
+                if (result != null)
+                {
+                    _db.User.Remove(result);
+                    await _db.SaveChangesAsync();
+                    return "Usuario removido com Sucesso.";
+                }
+                else
+                {
+                    return "Nenhum registro encontrado.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        #endregion
+
+        #region RESTAURANT
         [Route("Get/Restaurants"), HttpGet]
         public async Task<List<Restaurant>> GetAllRestaurantsAsync()
         {
@@ -72,7 +166,9 @@ namespace APIVotingSystem.Controllers
 
             return listRestaurants;
         }
+        #endregion
 
+        #region SAMPLE DATA
         [Route("Get/LoadSampleData"), HttpGet]
         public async Task<string> LoadSampleDataAsync()
         {
@@ -107,6 +203,9 @@ namespace APIVotingSystem.Controllers
             return text;
         }
 
+        #endregion
+
+        #region VOTE
         [Route("Post/RankingToDate"), HttpPost]
         public async Task<List<Ranking>> RankingToDateAsync(DateTime? dateRanking)
         {
@@ -125,7 +224,7 @@ namespace APIVotingSystem.Controllers
             var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
                 .Select(group => new { result = group, Count = group.Count() })
                 .OrderByDescending(x => x.Count).ToList();
-            
+
             foreach (var rest in query)
             {
                 Ranking itemRanking = new Ranking();
@@ -178,5 +277,7 @@ namespace APIVotingSystem.Controllers
                 return $"ERROR: {ex.Message}";
             }
         }
+
+        #endregion
     }
 }
