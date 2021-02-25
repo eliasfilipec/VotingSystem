@@ -37,13 +37,40 @@ namespace APIVotingSystem.Controllers
         }
 
         [Route("Get/Restaurants"), HttpGet]
-        public async Task<List<Restaurant>> GetRestaurantsAsync()
+        public async Task<List<Restaurant>> GetAllRestaurantsAsync()
         {
             return await _db.Restaurant.ToListAsync();
         }
 
+        [Route("Get/RestaurantsAvailable"), HttpGet]
+        public async Task<List<Restaurant>> GetRestaurantsAvailableAsync()
+        {
+            var dataweek = (int)DateTime.Now.DayOfWeek;
+
+            var listRestaurants = new List<Restaurant>();
+            listRestaurants = await _db.Restaurant.ToListAsync();
+            if (dataweek != 1)
+            {
+                for (int i = 1; i < dataweek; i++)
+                {
+                    var datequery = DateTime.Now.AddDays(-1);
+
+                    var resultVoteToDate = await _db.Vote.Where(w => w.DateVote.Date.Equals(datequery.Date))
+                    .Include(r => r.Restaurant).ToListAsync();
+
+                    var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
+                        .Select(group => new { result = group, Count = group.Count() })
+                        .OrderByDescending(x => x.Count).FirstOrDefault();
+
+                    var teste = query.result.Select(x => x.Restaurant).FirstOrDefault();
+                    listRestaurants.Remove(teste);
+                }
+            }
+
+            return listRestaurants;
+        }
+
         [Route("Get/LoadSampleData"), HttpGet]
-        //SAMPLE
         public async Task<string> LoadSampleDataAsync()
         {
             var text = string.Empty;
@@ -94,12 +121,11 @@ namespace APIVotingSystem.Controllers
 
             var restaurants = await GetRestaurantsAsync();
 
-            var testeQuery = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
+            var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
                 .Select(group => new { result = group, Count = group.Count() })
                 .OrderByDescending(x => x.Count).ToList();
-
             
-            foreach (var rest in testeQuery)
+            foreach (var rest in query)
             {
                 Ranking itemRanking = new Ranking();
                 itemRanking.CountVotes = rest.Count;
@@ -126,15 +152,15 @@ namespace APIVotingSystem.Controllers
 
                 var now = DateTime.UtcNow.AddHours(-3);
 
-                if (now.Hour > 18)
-                    return "Tempo de Votacao expirado.";
+                if (now.Hour > 12)
+                    return "Tempo de Votacao expirado!";
 
                 var voteResult = await _db.Vote.
                     Where(w => w.DateVote.Date.Equals(now.Date)).
                     Where(w => w.User.Id.Equals(userResult.Id)).ToListAsync();
 
                 if (voteResult.Any())
-                    return "Usuario ja realizou o voto!";
+                    return "Usuario ja realizou o votou!";
 
                 var vote = new Vote();
                 vote.DateVote = now;
