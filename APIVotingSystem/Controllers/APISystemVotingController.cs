@@ -138,7 +138,7 @@ namespace APIVotingSystem.Controllers
             return listranking;
         }
 
-        [Route("Post/InsertVote"), HttpPost]
+        [Route("Put/InsertVote"), HttpPut]
         public async Task<string> InsertVoteAsync(int idUser, int idRestaurant)
         {
             try
