@@ -53,17 +53,20 @@ namespace APIVotingSystem.Controllers
             {
                 for (int i = 1; i < dataweek; i++)
                 {
-                    var datequery = DateTime.Now.AddDays(-1);
+                    var datequery = DateTime.Now.AddDays(-i);
 
                     var resultVoteToDate = await _db.Vote.Where(w => w.DateVote.Date.Equals(datequery.Date))
                     .Include(r => r.Restaurant).ToListAsync();
 
-                    var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
-                        .Select(group => new { result = group, Count = group.Count() })
-                        .OrderByDescending(x => x.Count).FirstOrDefault();
+                    if (resultVoteToDate.Count != 0)
+                    {
+                        var query = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
+                           .Select(group => new { result = group, Count = group.Count() })
+                           .OrderByDescending(x => x.Count).FirstOrDefault();
 
-                    var teste = query.result.Select(x => x.Restaurant).FirstOrDefault();
-                    listRestaurants.Remove(teste);
+                        var restaurant = query.result.Select(x => x.Restaurant).FirstOrDefault();
+                        listRestaurants.Remove(restaurant);
+                    }
                 }
             }
 
