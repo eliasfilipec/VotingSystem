@@ -78,34 +78,37 @@ namespace APIVotingSystem.Controllers
         }
 
         [Route("Post/RankingToDate"), HttpPost]
-        public async Task<string> RankingToDateAsync(DateTime? dateRanking)
+        public async Task<List<Ranking>> RankingToDateAsync(DateTime? dateRanking)
         {
             if (!dateRanking.HasValue)
-                dateRanking = DateTime.UtcNow;            
+                dateRanking = DateTime.UtcNow.AddHours(-3);
 
-            var listRanking = new List<Ranking>();
             var resultVoteToDate = await _db.Vote.Where(w => w.DateVote.Date.Equals(dateRanking.Value.Date))
                 .Include(u => u.User)
                 .Include(r => r.Restaurant).ToListAsync();
 
+            List<Ranking> listranking = new List<Ranking>();
+
             if (!resultVoteToDate.Any())
-                return "Nenhum dado encontrado";
+                return listranking;
 
             var restaurants = await GetRestaurantsAsync();
 
-            var listRaking = new List<Ranking>();
+            var testeQuery = resultVoteToDate.GroupBy(x => x.Restaurant.Id)
+                .Select(group => new { result = group, Count = group.Count() })
+                .OrderByDescending(x => x.Count).ToList();
+
             
-            
+            foreach (var rest in testeQuery)
+            {
+                Ranking itemRanking = new Ranking();
+                itemRanking.CountVotes = rest.Count;
+                itemRanking.restaurantVote = rest.result.Select(x => x.Restaurant).FirstOrDefault();
+                itemRanking.usersVote = rest.result.Select(s => s.User).ToList();
+                listranking.Add(itemRanking);
+            }
 
-            var json = JsonSerializer.Serialize(resultVoteToDate);
-
-            return json;
-        }
-
-        class Ranking
-        {
-            public Restaurant restaurant { get; set; }
-            public int CountVotes { get; set; }
+            return listranking;
         }
 
         [Route("Post/InsertVote"), HttpPost]
