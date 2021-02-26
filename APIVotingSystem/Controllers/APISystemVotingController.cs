@@ -166,6 +166,93 @@ namespace APIVotingSystem.Controllers
 
             return listRestaurants;
         }
+
+        [Route("Get/Restaurant/{id}"), HttpGet]
+        public async Task<Restaurant> GetRestaurantToIdAsync(int? id)
+        {
+            var result = await _db.Restaurant.Where(w => w.Id.Equals(id)).FirstOrDefaultAsync();
+            if (result == null)
+                result = new Restaurant();
+
+            return result;
+        }
+
+        [Route("Put/Restaurant"), HttpPut]
+        public async Task<string> UpdateRestaurantAsync(Restaurant restaurant)
+        {
+            try
+            {
+                if (restaurant == null)
+                    return "User object is null.";
+
+                var entity = _db.Restaurant.FirstOrDefault(i => i.Id == restaurant.Id);
+
+                if (entity != null)
+                {
+                    entity.Name = restaurant.Name;
+                    await _db.SaveChangesAsync();
+                    return "Restaurant changed successfully!";
+                }
+                else
+                {
+                    return "Nonexistent User.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [Route("Post/Restaurant"), HttpPost]
+        public async Task<string> InserRestaurantAsync(Restaurant restaurant)
+        {
+            try
+            {
+                if (restaurant == null)
+                    return "Restaurant name field is empty.";
+
+                var restaurants = GetAllRestaurantsAsync();
+                restaurants.Wait();
+                if (restaurants.Result.Where(w => w.Name.ToUpper().Contains(restaurant.Name.ToUpper())).Any())
+                    return "Restaurant already exist.";
+
+
+                await _db.AddAsync(restaurant);
+                await _db.SaveChangesAsync();
+
+                return "Restaurant successfully inserted!";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [Route("Delete/Restaurant/{id}"), HttpDelete]
+        public async Task<string> DeleteRestaurantAsync(int id)
+        {
+            try
+            {
+                var result = await _db.Restaurant.Where(w => w.Id.Equals(id)).FirstOrDefaultAsync();
+
+                if (result != null)
+                {
+                    _db.Restaurant.Remove(result);
+                    await _db.SaveChangesAsync();
+                    return "Restaurant successfully removed.";
+                }
+                else
+                {
+                    return "No records found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         #endregion
 
         #region SAMPLE DATA

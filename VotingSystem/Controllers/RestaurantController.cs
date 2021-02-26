@@ -8,22 +8,22 @@ using VotingSystem.Models;
 
 namespace VotingSystem.Controllers
 {
-    public class UsersController : Controller
+    public class RestaurantController : Controller
     {
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
-            List<UserViewModel> users = null;
+            List<RestaurantViewModel> restaurants = null;
 
             try
             {
-                users = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUsersAsync();
+                restaurants = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").GetAllRestaurantsAsync();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            return View(users);
+            return View(restaurants);
         }
 
         [HttpGet]
@@ -33,11 +33,11 @@ namespace VotingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> Create(RestaurantViewModel restaurant)
         {
             try
             {
-                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").PostUserAsync(name);
+                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").PostRestaurantAsync(restaurant);
 
                 ViewBag.Message = result;
             }
@@ -60,7 +60,7 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
+                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").GetRestaurantToIdAsync(id);
                 return View(result);
             }
             catch (Exception ex)
@@ -71,17 +71,17 @@ namespace VotingSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UserViewModel user)
+        public async Task<IActionResult> Edit(RestaurantViewModel restaurant)
         {
             try
             {
-                if (user is null)
+                if (restaurant is null)
                 {
                     ViewBag.Message = "Objeto user esta nulo.";
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").UpdateUserAsync(user);
+                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").UpdateRestaurantAsync(restaurant);
                 ViewBag.Message = result;
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
+                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").GetRestaurantToIdAsync(id);
                 return View(result);
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace VotingSystem.Controllers
                 ViewBag.Message = ex.Message;
             }
             return View();
-        }       
+        }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
@@ -123,7 +123,7 @@ namespace VotingSystem.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").DeleteUserAsync(id);
+                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").DeleteRestaurantAsync(id);
                 ViewBag.Message = result;
             }
             catch (Exception ex)

@@ -28,6 +28,21 @@ namespace VotingSystem.Interfaces
     {
         [Get("/Get/RestaurantsAvailable")]
         Task<List<RestaurantViewModel>> GetRestaurantsAvailableAsync();
+
+        [Get("/Get/Restaurants")]
+        Task<List<RestaurantViewModel>> GetAllRestaurantsAsync();
+
+        [Get("/Get/Restaurant/{id}")]
+        Task<RestaurantViewModel> GetRestaurantToIdAsync(int? id);
+
+        [Post("/Post/Restaurant")]
+        Task<string> PostRestaurantAsync(RestaurantViewModel restaurant);
+
+        [Put("/Put/Restaurant")]
+        Task<string> UpdateRestaurantAsync(RestaurantViewModel restaurant);
+
+        [Delete("/Delete/Restaurant/{id}")]
+        Task<string> DeleteRestaurantAsync(int? id);
     }
 
     public interface IAPIVotingSystemRanking
