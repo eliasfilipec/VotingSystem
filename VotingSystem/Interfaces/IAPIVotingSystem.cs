@@ -35,4 +35,10 @@ namespace VotingSystem.Interfaces
         [Post("/Post/RankingToDate")]
         Task<List<RankingViewModel>> RankingToDateAsync(DateTime? datevote);
     }
+
+    public interface IAPIVotingSystemVote
+    {
+        [Put("/Put/InsertVote")]
+        Task<string> InsertVoteAsync(int idUser, int idRestaurant);
+    }
 }

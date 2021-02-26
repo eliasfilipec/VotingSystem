@@ -6,21 +6,35 @@
 
 <h1>Index</h1>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Vote", FormMethod.Post))
 {
-    @Html.DropDownListFor(modeluser => modeluser.Id, ((IEnumerable<UserViewModel>)ViewBag.Users).Select(Users => new SelectListItem
-    {
-        Text = Users.Name,
-        Value = Users.Id.ToString(),
-        Selected = (Model != null) && (Model.User.Id == Users.Id)
-    }), "Select user...", new { @class = "form-control" })
+    @Html.Label("User: ")
+    <br />
+    @Html.DropDownListFor(m => m.SelectedIdUser, new SelectList(Model.Users, "Id", "Name"), "Please select", new { @class = "form-control" })
+    @Html.HiddenFor(m => m.SelectedIdUser)
+    <hr />
+    @Html.Label("Restaurant: ")
+    <br />
+    @Html.DropDownListFor(m => m.SelectedIdRestaurant, new SelectList(Model.Restaurants, "Id", "Name"), "Please select", new { @class = "form-control" })
+    @Html.HiddenFor(m => m.SelectedIdRestaurant)
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Vote" class="btn btn-primary" />
+    </div>
+    <div class="alert alert-secondary" role="alert" id="showMessage">
+        @ViewBag.Message
+    </div>
 
-    @Html.DropDownListFor(modelRestaurantAvaliable => modelRestaurantAvaliable.Id, ((IEnumerable<RestaurantViewModel>)ViewBag.RestaurantAvailable).Select(RestaurantAvailable => new SelectListItem
-    {
-        Text = RestaurantAvailable.Name,
-        Value = RestaurantAvailable.Id.ToString(),
-        Selected = (Model != null) && (Model.Restaurant.Id == RestaurantAvailable.Id)
-    }), "Select restaurant...", new { @class = "form-control" })
-
-    <button type="submit">Vote Now</button>
+    <div>
+        <a asp-action="Index" asp-controller="Home">Back to List</a>
+    </div>
 }
+
+@if (string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script>
+        document.getElementById('showMessage').style.display = "none";
+    </script>
+}
+
+
