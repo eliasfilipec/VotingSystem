@@ -1,0 +1,26 @@
+﻿@model VoteViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(modeluser => modeluser.Id, ((IEnumerable<UserViewModel>)ViewBag.Users).Select(Users => new SelectListItem
+    {
+        Text = Users.Name,
+        Value = Users.Id.ToString(),
+        Selected = (Model != null) && (Model.User.Id == Users.Id)
+    }), "Select user...", new { @class = "form-control" })
+
+    @Html.DropDownListFor(modelRestaurantAvaliable => modelRestaurantAvaliable.Id, ((IEnumerable<RestaurantViewModel>)ViewBag.RestaurantAvailable).Select(RestaurantAvailable => new SelectListItem
+    {
+        Text = RestaurantAvailable.Name,
+        Value = RestaurantAvailable.Id.ToString(),
+        Selected = (Model != null) && (Model.Restaurant.Id == RestaurantAvailable.Id)
+    }), "Select restaurant...", new { @class = "form-control" })
+
+    <button type="submit">Vote Now</button>
+}

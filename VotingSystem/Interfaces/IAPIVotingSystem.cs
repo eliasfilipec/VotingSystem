@@ -26,7 +26,7 @@ namespace VotingSystem.Interfaces
 
     public interface IAPIVotingSystemRestaurant
     {
-        [Get("Get/RestaurantsAvailable")]
+        [Get("/Get/RestaurantsAvailable")]
         Task<List<RestaurantViewModel>> GetRestaurantsAvailableAsync();
     }
 
