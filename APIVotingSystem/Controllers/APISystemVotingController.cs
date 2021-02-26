@@ -53,7 +53,7 @@ namespace APIVotingSystem.Controllers
             try
             {
                 if (user == null)
-                    return "Objeto usuario esta nulo.";
+                    return "User object is null.";
 
                 var entity = _db.User.FirstOrDefault(i => i.Id == user.Id);
 
@@ -61,11 +61,11 @@ namespace APIVotingSystem.Controllers
                 {
                     entity.Name = user.Name;
                     await _db.SaveChangesAsync();
-                    return "Usuario alterado com Sucesso!";
+                    return "User changed successfully!";
                 }
                 else
                 {
-                    return "Usuario Inexistente.";
+                    return "Nonexistent User.";
                 }
             }
             catch (Exception ex)
@@ -80,12 +80,12 @@ namespace APIVotingSystem.Controllers
             try
             {
                 if (string.IsNullOrEmpty(name))
-                    return "Campo Nome do usuario esta vazio.";
+                    return "User name field is empty.";
 
                 var users = GetUsersAsync();
                 users.Wait();
                 if (users.Result.Where(w => w.Name.ToUpper().Contains(name.ToUpper())).Any())
-                    return "Usuario ja Existente.";
+                    return "User already exist.";
 
                 var user = new User
                 {
@@ -95,7 +95,7 @@ namespace APIVotingSystem.Controllers
                 await _db.AddAsync(user);
                 await _db.SaveChangesAsync();
 
-                return "Usuario inserido com Sucesso!";
+                return "User successfully inserted!";
             }
             catch (Exception ex)
             {
@@ -114,11 +114,11 @@ namespace APIVotingSystem.Controllers
                 {
                     _db.User.Remove(result);
                     await _db.SaveChangesAsync();
-                    return "Usuario removido com Sucesso.";
+                    return "User successfully removed.";
                 }
                 else
                 {
-                    return "Nenhum registro encontrado.";
+                    return "No records found.";
                 }
             }
             catch (Exception ex)
@@ -244,23 +244,23 @@ namespace APIVotingSystem.Controllers
             {
                 var userResult = await _db.User.FindAsync(idUser);
                 if (userResult == null)
-                    return "Usuario Inexistente!";
+                    return "Non-existent user!";
 
                 var restaurantResult = await _db.Restaurant.FindAsync(idRestaurant);
                 if (restaurantResult == null)
-                    return "Restaurante Inexistente!";
+                    return "Non-existent restaurant!";
 
                 var now = DateTime.UtcNow.AddHours(-3);
 
                 if (now.Hour > 12)
-                    return "Tempo de Votacao expirado!";
+                    return "Voting time expired!";
 
                 var voteResult = await _db.Vote.
                     Where(w => w.DateVote.Date.Equals(now.Date)).
                     Where(w => w.User.Id.Equals(userResult.Id)).ToListAsync();
 
                 if (voteResult.Any())
-                    return "Usuario ja realizou o votou!";
+                    return "User has already voted!";
 
                 var vote = new Vote();
                 vote.DateVote = now;
@@ -270,7 +270,7 @@ namespace APIVotingSystem.Controllers
                 await _db.AddAsync(vote);
                 await _db.SaveChangesAsync();
 
-                return "Voto inserido com Sucesso!";
+                return "Vote successfully inserted!";
             }
             catch (Exception ex)
             {
