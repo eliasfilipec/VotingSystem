@@ -1,11 +1,12 @@
 ﻿using Refit;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VotingSystem.Models;
 
 namespace VotingSystem.Interfaces
 {
-    public interface IAPIVotingSystem
+    public interface IAPIVotingSystemUser
     {
         [Get("/Get/Users")]
         Task<List<UserViewModel>> GetUsersAsync();
@@ -21,5 +22,17 @@ namespace VotingSystem.Interfaces
 
         [Delete("/Delete/User/{id}")]
         Task<string> DeleteUserAsync(int? id);
+    }
+
+    public interface IAPIVotingSystemRestaurant
+    {
+        [Get("Get/RestaurantsAvailable")]
+        Task<List<RestaurantViewModel>> GetRestaurantsAvailableAsync();
+    }
+
+    public interface IAPIVotingSystemRanking
+    {
+        [Post("/Post/RankingToDate")]
+        Task<List<RankingViewModel>> RankingToDateAsync(DateTime? datevote);
     }
 }

@@ -16,7 +16,7 @@ namespace VotingSystem.Controllers
 
             try
             {
-                users = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").GetUsersAsync();
+                users = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUsersAsync();
             }
             catch (Exception ex)
             {
@@ -37,7 +37,7 @@ namespace VotingSystem.Controllers
         {
             try
             {
-                var result = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").PostUserAsync(name);
+                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").PostUserAsync(name);
 
                 ViewBag.Message = result;
             }
@@ -48,12 +48,6 @@ namespace VotingSystem.Controllers
 
             return View();
         }
-
-        //[HttpGet]
-        //public IActionResult Edit()
-        //{
-        //    return View();
-        //}
 
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -66,7 +60,7 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
+                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
                 return View(result);
             }
             catch (Exception ex)
@@ -86,7 +80,7 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
+                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").GetUserToIdAsync(id);
                 return View(result);
             }
             catch (Exception ex)
@@ -107,7 +101,7 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").UpdateUserAsync(user);
+                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").UpdateUserAsync(user);
                 ViewBag.Message = result;
             }
             catch (Exception ex)
@@ -129,7 +123,7 @@ namespace VotingSystem.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var result = await RestService.For<IAPIVotingSystem>("https://localhost:44381/APISystemVoting/").DeleteUserAsync(id);
+                var result = await RestService.For<IAPIVotingSystemUser>("https://localhost:44381/APISystemVoting/").DeleteUserAsync(id);
                 ViewBag.Message = result;
             }
             catch (Exception ex)
