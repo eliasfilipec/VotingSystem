@@ -188,14 +188,22 @@ namespace APIVotingSystem.Controllers
                 var entity = _db.Restaurant.FirstOrDefault(i => i.Id == restaurant.Id);
 
                 if (entity != null)
-                {
+                {                   
                     entity.Name = restaurant.Name;
+                    entity.Address = restaurant.Address;
+                    entity.Number = restaurant.Number;
+                    entity.Neighborhood = restaurant.Neighborhood;
+                    entity.City = restaurant.City;
+                    entity.State = restaurant.State;
+                    entity.Complement = restaurant.Complement;
+                    entity.ZipCode = restaurant.ZipCode;
+                    entity.Telephone = restaurant.Telephone;
                     await _db.SaveChangesAsync();
                     return "Restaurant changed successfully!";
                 }
                 else
                 {
-                    return "Nonexistent User.";
+                    return "Nonexistent Restaurant.";
                 }
             }
             catch (Exception ex)

@@ -37,6 +37,12 @@ namespace VotingSystem.Controllers
         {
             try
             {
+                if (!ValidationRestaurant(restaurant))
+                {
+                    ViewBag.Message = "Missing fields to be filled";
+                    return View();
+                }
+
                 var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").PostRestaurantAsync(restaurant);
 
                 ViewBag.Message = result;
@@ -60,8 +66,15 @@ namespace VotingSystem.Controllers
                     return View();
                 }
 
-                var result = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").GetRestaurantToIdAsync(id);
-                return View(result);
+                var restaurant = await RestService.For<IAPIVotingSystemRestaurant>("https://localhost:44381/APISystemVoting/").GetRestaurantToIdAsync(id);
+
+                if (!ValidationRestaurant(restaurant))
+                {
+                    ViewBag.Message = "Missing fields to be filled";
+                    return View();
+                }
+
+                return View(restaurant);
             }
             catch (Exception ex)
             {
@@ -78,6 +91,12 @@ namespace VotingSystem.Controllers
                 if (restaurant is null)
                 {
                     ViewBag.Message = "Objeto user esta nulo.";
+                    return View();
+                }
+
+                if (!ValidationRestaurant(restaurant))
+                {
+                    ViewBag.Message = "Missing fields to be filled";
                     return View();
                 }
 
@@ -131,6 +150,20 @@ namespace VotingSystem.Controllers
                 ViewBag.Message = ex.Message;
             }
             return RedirectToAction("Index");
+        }
+
+        private bool ValidationRestaurant(RestaurantViewModel restaurant)
+        {
+            if (string.IsNullOrEmpty(restaurant.Name) ||
+                   string.IsNullOrEmpty(restaurant.Address) ||
+                   string.IsNullOrEmpty(restaurant.Neighborhood) ||
+                   string.IsNullOrEmpty(restaurant.Complement) ||
+                   string.IsNullOrEmpty(restaurant.State) ||
+                   string.IsNullOrEmpty(restaurant.Telephone) ||
+                   string.IsNullOrEmpty(restaurant.ZipCode) ||
+                   restaurant?.Number == null || restaurant.Number == 0)
+                return false;
+            return true;
         }
     }
 }
