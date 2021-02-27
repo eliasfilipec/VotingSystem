@@ -1,0 +1,101 @@
+[
+	{
+		"Name": "Bar do Epicurista",
+		"Address": "Av. Dr. Francisco Junqueira",
+		"Number": 3280,
+		"Neighborhood": "Vila Seixas",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14020-000",
+		"Complement": "Proximo West Pub",
+		"Telephone": "1636324616"
+	},
+	{
+		"Name": "Coco Bambu",
+		"Address": " Av. Luiz Eduardo Toledo Prado",
+		"Number": 900,
+		"Neighborhood": "Vila do Golfe",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14027-250",
+		"Complement": "Shopping Iguatemi",
+		"Telephone": "1639043737"
+	},
+	{
+		"Name": "Pastelaria Rios",
+		"Address": "R. Visc. de Inhauma",
+		"Number": 701,
+		"Neighborhood": "Centro",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14015-060",
+		"Complement": "Proximo a Catedral Metropolitana de São Sebastião",
+		"Telephone": "16997887431"
+	},
+	{
+		"Name": "Miraia Restaurante Japones",
+		"Address": "R. Ondibecte Silveira",
+		"Number": 293,
+		"Neighborhood": "Jardim Paulista",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14091-140",
+		"Complement": "Proximo Estádio Dr. Francisco de Palma",
+		"Telephone": "1636240530"
+	},
+	{
+		"Name": "Vapiano",
+		"Address": "Av. Jose Adolfo Bianco Molina",
+		"Number": 2331,
+		"Neighborhood": "Jardim Canada",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14024-210",
+		"Complement": "Proximo Pao de Açucar",
+		"Telephone": "1636208040"
+	},
+	{
+		"Name": "Outback",
+		"Address": "Av. Cel. Fernando Ferreira Leite",
+		"Number": 1540,
+		"Neighborhood": "Jardim California",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14026-020",
+		"Complement": "Ribeirão Shopping",
+		"Telephone": "1639112222"
+	},
+	{
+		"Name": "Sabor Delícia",
+		"Address": "Av. Portugal",
+		"Number": 1840,
+		"Neighborhood": "Jardim Sao Luiz",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14020-380",
+		"Complement": "Proximo escola SEB",
+		"Telephone": "1636236143"
+	},
+	{
+		"Name": "Kyodai Fusion",
+		"Address": "R. Cavalheiro Torquato Rizzi",
+		"Number": 1295,
+		"Neighborhood": "Jardim Irajá",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14020-285",
+		"Complement": "Proximo Eurobike BMW",
+		"Telephone": "1639161096"
+	},
+	{
+		"Name": "Lazzarella",
+		"Address": "R. Rafael Pilegi",
+		"Number": 62,
+		"Neighborhood": "Jardim Sumare",
+		"City": "Ribeirao Preto",
+		"State": "SP",
+		"ZipCode": "14025-048",
+		"Complement": "Proximo Hospital São Paulo",
+		"Telephone": "1639412957"
+	}
+]

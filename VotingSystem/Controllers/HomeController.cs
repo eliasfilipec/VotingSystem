@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Refit;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using VotingSystem.Interfaces;
 using VotingSystem.Models;
 
 namespace VotingSystem.Controllers
@@ -18,14 +18,11 @@ namespace VotingSystem.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public async Task<IActionResult> Index()
+        {           
+            var ranking = await RestService.For<IAPIVotingSystemRanking>("https://localhost:44381/APISystemVoting/").RankingToDateAsync(DateTime.UtcNow.AddHours(-3));
 
-        public IActionResult RegisterRestaurants()
-        {
-            return View();
+            return View(ranking);
         }
 
         public IActionResult Privacy()

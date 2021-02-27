@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSystem", "VotingSystem\VotingSystem.csproj", "{9B714A73-95E9-4333-A82E-B49EBCCE815B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VotingSystem", "VotingSystem\VotingSystem.csproj", "{9B714A73-95E9-4333-A82E-B49EBCCE815B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFDataAccessLibrary", "EFDataAccessLibrary\EFDataAccessLibrary.csproj", "{D4E3A128-133B-4F05-93DE-AC650ADCCB8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIVotingSystem", "APIVotingSystem\APIVotingSystem.csproj", "{3EF41821-A5F8-4B56-A92B-2DFC6E7E053E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9B714A73-95E9-4333-A82E-B49EBCCE815B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B714A73-95E9-4333-A82E-B49EBCCE815B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B714A73-95E9-4333-A82E-B49EBCCE815B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E3A128-133B-4F05-93DE-AC650ADCCB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E3A128-133B-4F05-93DE-AC650ADCCB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E3A128-133B-4F05-93DE-AC650ADCCB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E3A128-133B-4F05-93DE-AC650ADCCB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF41821-A5F8-4B56-A92B-2DFC6E7E053E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF41821-A5F8-4B56-A92B-2DFC6E7E053E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF41821-A5F8-4B56-A92B-2DFC6E7E053E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF41821-A5F8-4B56-A92B-2DFC6E7E053E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

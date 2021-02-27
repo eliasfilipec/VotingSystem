@@ -1,9 +1,44 @@
-﻿@{
+﻿@model IEnumerable<RankingViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <h4 class="display">to the</h4>
-    <h2 class="display-3">System Voting</h2>
+    <h3 class="display-4">Welcome</h3>
+    <h4 class="display">to</h4>
+    <h3 class="display-3">System Voting</h3>
+</div>
+<br />
+<hr />
+<h3>Ranking Restaurants</h3>
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Votes
+                </th>
+                <th scope="col">
+                    Restaurant
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.CountVotes)
+                    </td>
+                    <td scope="row">
+                        @item.restaurantVote.Name
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        @Html.ActionLink("Add Vote", "Index", "Vote")
+    </p>
 </div>
